@@ -1,0 +1,12 @@
+<div class="headers-container"  >
+	<app-tab-header *ngFor="let tab of tabs; index as inx" [header]="tab.header" [ngClass]="{'active' : tab.active}" [id]="inx" (click)="onActiveTab(inx)" (contextmenu)="onContextMenu($event)"></app-tab-header>
+</div>
+<div  [@ifTransition]="animationTrigger">
+	<ng-container *ngFor="let tab of tabs" >
+		<div *ngIf="tab.active">
+			<app-tab-content  [content]="tab.content"></app-tab-content>
+		</div>
+	</ng-container>
+</div>
+
+

@@ -1,0 +1,16 @@
+.headers-container{
+    display: flex;
+}
+:host /deep/ app-tab-header{
+    border: 1px solid #eee8f3;
+    padding: 0px 12px;
+    cursor: pointer;
+    color: #3540ff
+}
+:host /deep/ app-tab-header:hover{
+    background: #eff2ff;
+    color: darkred;
+}
+:host /deep/ app-tab-header.active{
+    border-bottom: 2px solid darkred;
+}

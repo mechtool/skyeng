@@ -1,20 +1,43 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="note">Оба варианта работают примерно одинаково: при нажатии на кнопку выходится контекстное меню, которым управляется добавление и удаление закладок (при удалении через кнопку, удаляется закладка с нулевым индексом). При активации события вызова контекстного меню над заголовком какой нибудь закладки - при удалении удаляется закладка, над заголовком которой произошел вызов, при добавлении - новая закладка ставиться в конец общего списка. Можно еще реализовать подход динамической вставки компонентов (hostView, EmbeddedView) в представление, используя абстракции <span style="color: darkred">ViewContainerRef, TemplateRef </span> </div>
+<div class="mat-tab-container">
+	<mat-toolbar color="primary">
+		<mat-toolbar-row>
+			<button mat-mini-fab>
+				<mat-icon aria-label="add element button" #menuTrigger="matMenuTrigger" [mat-menu-trigger-for]="menu">menu</mat-icon>
+			</button>
+			<span>Использует компонентный подход библиотеки Angular Material</span>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<mat-tab-group [selectedIndex]="selectedIndex"  (selectedIndexChange)="selectedIndex = $event" >
+		<mat-tab *ngFor="let tab of tabs; index as inx">
+			<ng-template mat-tab-label >
+				<span>{{tab.label}}</span>
+			</ng-template>
+			
+			{{tab.content}}
+		</mat-tab>
+	
+	</mat-tab-group>
+	<mat-menu #menu="matMenu" >
+		<button mat-menu-item (click)="deleteTab()" >Удалить</button>
+		<button mat-menu-item (click)="addTab()" >Добавить</button>
+	</mat-menu>
+	
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="angular-tab-container">
+	<mat-toolbar color="primary">
+		<mat-toolbar-row>
+			<button mat-mini-fab>
+				<mat-icon aria-label="add element button" #secondMenuTrigger="matMenuTrigger" [mat-menu-trigger-for]="secondMenu">menu</mat-icon>
+			</button>
+			<span>Использует компонентный подход разработчика(<span style="font-size: 14px">в разметке только содержимое активной закладки</span>)</span>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<app-tabs (activatedTab)="onActiveTab($event)"></app-tabs>
+	<mat-menu #secondMenu="matMenu" >
+		<button mat-menu-item (click)="deleteSecondTab()" >Удалить</button>
+		<button mat-menu-item (click)="addSecondTab()" >Добавить</button>
+	</mat-menu>
+
+</div>
 
