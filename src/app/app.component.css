@@ -17,4 +17,5 @@ button{
 pre{
     font-size: 16px;
     color: darkblue;
+    overflow-x: auto;
 }
