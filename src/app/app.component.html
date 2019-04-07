@@ -1,43 +1,142 @@
-<div class="note">Оба варианта работают примерно одинаково: при нажатии на кнопку выводится контекстное меню, которым управляется добавление и удаление закладок (при удалении через кнопку, удаляется закладка с нулевым индексом). При активации события вызова контекстного меню (правая кнопка мыши) над заголовком какой нибудь закладки - при удалении удаляется закладка, над заголовком которой произошел вызов, при добавлении - новая закладка ставиться в конец общего списка. Можно еще реализовать подход динамической вставки компонентов (hostView, EmbeddedView) в представление, используя абстракции <span style="color: darkred">ViewContainerRef, TemplateRef </span> </div>
-<div class="mat-tab-container">
-	<mat-toolbar color="primary">
-		<mat-toolbar-row>
-			<button mat-mini-fab>
-				<mat-icon aria-label="add element button" #menuTrigger="matMenuTrigger" [mat-menu-trigger-for]="menu">menu</mat-icon>
-			</button>
-			<span>Использует компонентный подход библиотеки Angular Material</span>
-		</mat-toolbar-row>
-	</mat-toolbar>
-	<mat-tab-group [selectedIndex]="selectedIndex"  (selectedIndexChange)="selectedIndex = $event" >
-		<mat-tab *ngFor="let tab of tabs; index as inx">
-			<ng-template mat-tab-label >
-				<span>{{tab.label}}</span>
-			</ng-template>
-			
-			{{tab.content}}
-		</mat-tab>
-	
-	</mat-tab-group>
-	<mat-menu #menu="matMenu" >
-		<button mat-menu-item (click)="deleteTab()" >Удалить</button>
-		<button mat-menu-item (click)="addTab()" >Добавить</button>
-	</mat-menu>
-	
-</div>
-<div class="angular-tab-container">
-	<mat-toolbar color="primary">
-		<mat-toolbar-row>
-			<button mat-mini-fab>
-				<mat-icon aria-label="add element button" #secondMenuTrigger="matMenuTrigger" [mat-menu-trigger-for]="secondMenu">menu</mat-icon>
-			</button>
-			<span>Использует компонентный подход разработчика(<span style="font-size: 14px">в разметке только содержимое активной закладки</span>)</span>
-		</mat-toolbar-row>
-	</mat-toolbar>
-	<app-tabs (activatedTab)="onActiveTab($event)"></app-tabs>
-	<mat-menu #secondMenu="matMenu" >
-		<button mat-menu-item (click)="deleteSecondTab()" >Удалить</button>
-		<button mat-menu-item (click)="addSecondTab()" >Добавить</button>
-	</mat-menu>
+<section class="fist-task">
+	<div class="note">Первое задание. Оба варианта работают примерно одинаково: при нажатии на кнопку выводится контекстное меню, которым управляется добавление и удаление закладок (при удалении через кнопку, удаляется закладка с нулевым индексом). При активации события вызова контекстного меню (правая кнопка мыши) над заголовком какой нибудь закладки - при удалении удаляется закладка, над заголовком которой произошел вызов, при добавлении - новая закладка ставиться в конец общего списка. Можно еще реализовать подход динамической вставки компонентов (hostView, EmbeddedView) в представление, используя абстракции <span style="color: darkred">ViewContainerRef, TemplateRef </span> </div>
+	<div class="mat-tab-container">
+		<mat-toolbar color="primary">
+			<mat-toolbar-row>
+				<button mat-mini-fab>
+					<mat-icon aria-label="add element button" #menuTrigger="matMenuTrigger" [mat-menu-trigger-for]="menu">menu</mat-icon>
+				</button>
+				<span>Использует компонентный подход библиотеки Angular Material</span>
+			</mat-toolbar-row>
+		</mat-toolbar>
+		<mat-tab-group [selectedIndex]="selectedIndex"  (selectedIndexChange)="selectedIndex = $event" >
+			<mat-tab *ngFor="let tab of tabs; index as inx">
+				<ng-template mat-tab-label >
+					<span>{{tab.label}}</span>
+				</ng-template>
+				
+				{{tab.content}}
+			</mat-tab>
+		
+		</mat-tab-group>
+		<mat-menu #menu="matMenu" >
+			<button mat-menu-item (click)="deleteTab()" >Удалить</button>
+			<button mat-menu-item (click)="addTab()" >Добавить</button>
+		</mat-menu>
+	</div>
+	<div class="angular-tab-container">
+		<mat-toolbar color="primary">
+			<mat-toolbar-row>
+				<button mat-mini-fab>
+					<mat-icon aria-label="add element button" #secondMenuTrigger="matMenuTrigger" [mat-menu-trigger-for]="secondMenu">menu</mat-icon>
+				</button>
+				<span>Использует компонентный подход разработчика(<span style="font-size: 14px">в разметке только содержимое активной закладки</span>)</span>
+			</mat-toolbar-row>
+		</mat-toolbar>
+		<app-tabs (activatedTab)="onActiveTab($event)"></app-tabs>
+		<mat-menu #secondMenu="matMenu" >
+			<button mat-menu-item (click)="deleteSecondTab()" >Удалить</button>
+			<button mat-menu-item (click)="addSecondTab()" >Добавить</button>
+		</mat-menu>
+	</div>
+</section>
+<section class="second-task">
+	<div class="note">Второе задание. К сожалению, мне трудно говорить о предмете, языком которого не владею (php). Ниже - мое представление на JavaScript, для задачи кэширования на клиенте результатов публичных API (к примеру, запроса базы данных) и логирования ошибок данного запроса в консоль. Речь веду исключительно о случае кэширования <span style="color: darkred">данных</span> в приложение, не касаясь кэширования статики (т.е управления заголовками кэширования Cache-Control, ETag и др. на сервере), не касаясь кэширования на сервере (nginx) и пр. <br>
+		Реализацию такого подхода можно посмотреть на примере <a target="_blank" href="https://fir-next-d99d2.firebaseapp.com">маленького приложения о погоде</a>, которое написано в технике PWA, т.е может работать в браузере как нативное (при отсутствие сети), поскольку использует стратегию предварительного кэширования данных в кэш приложения при первом обращении к серверу, используя сервисного рабочего, а так же устанавливаться на любое мобильное устройство, поскольку имеет файл манифеста, а его настройки соответствуют условиям / критерия вывода сообщения (подсказки) пользователю для установки на  экран
+устройства. Приведу открытый, стандартный код с пояснениями в двух вариантах.  </div>
+	<div>
+		Первый вариант: простецкий запрос и сохранение результата в кэш приложения<br>
+		<pre>
+//лезем в кэши и пытаемся открыть кэш по имени, если его нет - он создастся,
+//и его методом добавления результата запроса, добавляем результат в кэш.
+caches.open('v1').then(function(cache) &#123;
+   return cache.add('/data-base-users-api?userid=fsgr34gdfsb');
+&#125;).catch(
+   ...Обработка ошибки
+)
+		</pre>
+	</div>
+	<div>
+		Второй вариант : с настройкой сервисного рабочего и предварительного кэширования данных
+		<ol>
+			<li>
+				Настраиваем сервисного рабочего для приложения:
+				<pre>
+if ('serviceWorker' in navigator)&#123;
+   window.addEventListener('load', function()&#123;
+      navigator.serviceWorker.register('/sw.js').then(function(registration)&#123;
+     //Регистрация прошла успешно, логируем контекст
+     console.log(': Сервисный рабочий обслуживает контекст:', registration.scope);
+   &#125;, function(err)&#123;
+      // Неудачная регистрация, логирование ошибки:(
+      console.log('Неудачная регистрация с объектом ошибки: ', err);
+    &#125;);
+  &#125;);
+&#123;
+				</pre>
+			</li>
+			<li>
+				Настройка предварительной загрузки и стратегии кэширования, в данном случае используем стратегия <span  style="color: darkgoldenrod" >Сеть или Кэш</span> в файле /sw.js
+				<pre>
+var CACHE = 'network-or-cache';
+//При установке сервисного рабочего сразу кэшируем нужные нам ресурсы
+self.addEventListener('install', function(evt) &#123;
+   console.log('Началась установка сервисного рабочего, ставим кэши предзагрузки.');
+   evt.waitUntil(precache());//Если предзагрузка окажется неудачной, сервисный рабочий не всанет вообще...
+&#125;);
+//Подписка на события запросов данных со страний-клиентов сервисного рабочего
 
-</div>
+self.addEventListener('fetch', function(evt) &#125;
+   console.log('Начало прослушивания клиентов.');
+   //Лезем в сеть, и если запрос неудачен по разным причинам, то лезем в кэш и берем предзагруженные данные
+
+   evt.respondWith(fromNetwork(evt.request, 400).catch(function () &#123;
+      return fromCache(evt.request);
+   &#125;));
+&#125;);
+
+function precache() &#123; //Функция предварительного кэширования данных пользователя
+   return caches.open(CACHE).then(function (cache) &#123;
+      return cache.addAll([
+        '/data-base-users-api?userid=fsgr34gdfsb',
+      ]);
+  &#125;);
+&#125;
+//Ограниченный сетевой запрос. Если неудачен или ответ не получен до установленного таймаута, промис блокируется, что сигнализирут о неудаче
+function fromNetwork(request, timeout) &#123;
+   return new Promise(function (fulfill, reject) &#123;
+   //Установка таймаута
+       var timeoutId = setTimeout(reject, timeout);
+   ///Непосредственно стучимся в сеть
+      fetch(request).then(function (response) &#123;
+         clearTimeout(timeoutId);
+         fulfill(response);  //при успехе отвечаем объектом ответа
+      &#125;, reject);  //при ошибке, блокируем промис
+   &#125;);
+&#125;
+
+ //Стучимся в кэш после неудачи в сети и ищем в определенном кэше наш запрос
+function fromCache(request) &#123;
+   return caches.open(CACHE).then(function (cache) &#123;
+      return cache.match(request).then(function (matching) &#123;//Если есть данные ,то их отдаем, иначе блокируем промис
+         return matching || Promise.reject('Данные в кэше не найдены');
+    &#125;);
+  &#125;);
+&#125;
+				</pre>
+			</li>
+			<li>
+				Непосредственный запрос с основной страницы приложения <span style="color: #ff0737;">index.js</span>
+				<pre>
+fetch('/data-base-users-api?userid=fsgr34gdfsb').then(function(r) &#123;
+   //Обработка ответа
+&#125;).catch(function()&#123;
+   //Обработка ошибки
+&#125;);
+				</pre>
+			</li>
+		</ol>
+	</div>
+
+</section>
 
